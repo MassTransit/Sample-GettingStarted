@@ -1,0 +1,11 @@
+*.suo
+*.user
+bin
+obj
+
+.DS_Store
+*.DotSettings
+
+**/.vs
+**/.vscode
+**/.idea
