@@ -1,6 +1,6 @@
 # Getting Started with MassTransit
 
-This project is [part of the MassTransit documentation](http://localhost:8080/getting-started/). Refer to that link for details.
+This project is [part of the MassTransit documentation](https://masstransit-project.com/getting-started/). Refer to that link for details.
 
 Getting started with MassTransit is fast and easy. This quick start guide uses RabbitMQ with .NET 5. RabbitMQ must be installed, instructions for installing RabbitMQ are included [below](#install-rabbitmq). 
 
