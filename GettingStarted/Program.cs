@@ -1,4 +1,3 @@
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MassTransit;
@@ -25,7 +24,6 @@ namespace GettingStarted
                             cfg.ConfigureEndpoints(context);
                         });
                     });
-                    services.AddMassTransitHostedService();
 
                     services.AddHostedService<Worker>();
                 });
