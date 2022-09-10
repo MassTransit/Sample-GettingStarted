@@ -186,7 +186,6 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
                     cfg.ConfigureEndpoints(context);
                 });
             });
-            services.AddMassTransitHostedService();
 
             services.AddHostedService<Worker>();
         });
