@@ -1,31 +1,19 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using GettingStarted;
 using MassTransit;
 
-namespace GettingStarted
+var builder = Host.CreateApplicationBuilder(args);
+
+builder.Services.AddMassTransit(x =>
 {
-    public class Program
+    x.AddConsumer<MessageConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddMassTransit(x =>
-                    {
-                        x.AddConsumer<MessageConsumer>();
+builder.Services.AddHostedService<Worker>();
 
-                        x.UsingRabbitMq((context,cfg) =>
-                        {
-                            cfg.ConfigureEndpoints(context);
-                        });
-                    });
-
-                    services.AddHostedService<Worker>();
-                });
-    }
-}
+var host = builder.Build();
+host.Run();
