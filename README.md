@@ -46,28 +46,28 @@ info: GettingStarted.Worker[0]
 
 ### Edit Program.cs
 
-```csharp
+Replace the contents of `Program.cs` with:
+
+```csharp {2,6-14}
+using GettingStarted;
 using MassTransit;
-```
 
-```csharp {5-14}
-public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureServices((hostContext, services) =>
-        {
-            services.AddMassTransit(x =>
-            {
-                x.AddConsumer<MessageConsumer>();
+var builder = Host.CreateApplicationBuilder(args);
 
-                x.UsingInMemory((context,cfg) =>
-                {
-                    cfg.ConfigureEndpoints(context);
-                });
-            });
-            services.AddMassTransitHostedService(true);
-            
-            services.AddHostedService<Worker>();
-        });
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<MessageConsumer>();
+
+    x.UsingInMemory((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+builder.Services.AddHostedService<Worker>();
+
+var host = builder.Build();
+host.Run();
 ```
 
 ### Add a Consumer
@@ -109,6 +109,10 @@ namespace GettingStarted
 ### Update the Worker
 
 ```csharp
+using MassTransit;
+
+namespace GettingStarted;
+
 public class Worker : BackgroundService
 {
     readonly IBus _bus;
@@ -172,23 +176,26 @@ $ dotnet add package MassTransit.RabbitMQ --version 8.5.12
 
 Change `UsingInMemory` to `UsingRabbitMq`.
 
-```csharp {9}
-public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureServices((hostContext, services) =>
-        {
-            services.AddMassTransit(x =>
-            {
-                x.AddConsumer<MessageConsumer>();
+```csharp {10}
+using GettingStarted;
+using MassTransit;
 
-                x.UsingRabbitMq((context,cfg) =>
-                {
-                    cfg.ConfigureEndpoints(context);
-                });
-            });
+var builder = Host.CreateApplicationBuilder(args);
 
-            services.AddHostedService<Worker>();
-        });
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<MessageConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+builder.Services.AddHostedService<Worker>();
+
+var host = builder.Build();
+host.Run();
 ```
 
 ### Run the project
