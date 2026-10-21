@@ -2,9 +2,9 @@
 
 This project is [part of the MassTransit documentation](https://masstransit-project.com/getting-started/). Refer to that link for details.
 
-Getting started with MassTransit is fast and easy. This quick start guide uses RabbitMQ with .NET 5. RabbitMQ must be installed, instructions for installing RabbitMQ are included [below](#install-rabbitmq). 
+Getting started with MassTransit is fast and easy. This quick start guide uses RabbitMQ with .NET 10. RabbitMQ must be installed, instructions for installing RabbitMQ are included [below](#install-rabbitmq). 
 
-> The [.NET 5 SDK](https://dotnet.microsoft.com/download) should be installed before continuing.
+> The [.NET 10 SDK](https://dotnet.microsoft.com/download) should be installed before continuing.
 
 To create a service using MassTransit, create a worker via the Command Prompt.
 
@@ -19,7 +19,7 @@ Add MassTransit package to the console application:
 
 ```bash
 $ cd GettingStarted
-$ dotnet add package MassTransit.AspNetCore
+$ dotnet add package MassTransit --version 8.5.12
 ```
 
 At this point, the project should compile, but there is more work to be done. You can verify the project builds by executing:
@@ -165,7 +165,7 @@ At this point, the consumer is configured on the bus and messages are published 
 Add RabbitMQ for MassTransit package to the console application.
 
 ```bash
-$ dotnet add package MassTransit.RabbitMQ
+$ dotnet add package MassTransit.RabbitMQ --version 8.5.12
 ```
 
 ### Edit Program.cs
